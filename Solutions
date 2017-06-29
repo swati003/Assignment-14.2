@@ -1,0 +1,26 @@
+Creating table and loading data into the table from file input.txt
+
+create table temp_table (sdate date,zipcode string,tmp int) row format delimited fields terminated by ',' lines terminated by '\n'stored as textfile;
+load data local inpath 'temp.txt' into table temp_table ;
+
+--------------------------------------------------------------------------------------------------------------------------------------
+A)Fetch date and temperature from temperature_data where zip code is greater than
+300000 and less than 399999.
+
+Solution : select sdate,tmp from temp_table where zipcode>300000 and zipcode<399999 ;
+--------------------------------------------------------------------------------------------------------------------------------------
+B)Calculate maximum temperature corresponding to every year from temperature_data
+table.
+
+Solution : select year(sdate),max(tmp) from temp_table group by year(sdate) ;
+
+
+--------------------------------------------------------------------------------------------------------------------------------------
+C)Create a view on the top of last query, name it temperature_data_vw.
+
+
+Solution :
+CREATE VIEW [IF NOT EXISTS] temperature_data_vw [(year,maxTemp)]
+  AS select year(sdate),max(tmp) from temp_table group by year(sdate) ;
+
+--------------------------------------------------------------------------------------------------------------------------------------
